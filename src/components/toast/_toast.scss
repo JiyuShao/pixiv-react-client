@@ -1,0 +1,47 @@
+%weui-icon_toast_icon {
+  color: #fff;
+  font-size: 2.4em;
+}
+
+.weui-toast-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.weui-toast.weui-toast_normal {
+  position: initial;
+  margin: initial;
+  margin-top: -8em;
+  top: initial;
+  left: initial;
+}
+
+.weui-toast.weui-toast_text {
+  @extend .weui-toast_normal;
+  min-height: initial;
+  width: auto;
+  max-width: 60%;
+  padding: 0 0.5em;
+}
+
+.weui-icon_toast.weui-icon-success:before,
+.weui-icon_toast.weui-icon-cancel:before,
+.weui-icon_toast.weui-icon-forbidden:before,
+.weui-icon_toast.weui-icon-loading:before {
+  @extend %weui-icon_toast_icon;
+}
+
+.weui-icon_toast.weui-icon-warn:before {
+  @extend %weui-icon_toast_icon;
+  color: #f6383a;
+}
+
+.weui-icon_toast.weui-icon-text {
+  display: none;
+}

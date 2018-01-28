@@ -1,0 +1,10 @@
+@import '_flex.scss';
+@import '_flex-class.scss';
+
+html,body {
+  min-height: 100%;
+}
+
+html {
+  background-color: #eee;
+}
