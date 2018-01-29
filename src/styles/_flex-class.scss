@@ -102,21 +102,21 @@
 //
 // Values: flex-start | flex-end | center | baseline | stretch
 .flex-align-items-flex-start {
-  @include justify-content(flex-start);
+  @include align-items(flex-start);
 }
 
 .flex-align-items-flex-end {
-  @include justify-content(flex-end);
+  @include align-items(flex-end);
 }
 
 .flex-align-items-center {
-  @include justify-content(center);
+  @include align-items(center);
 }
 
 .flex-align-items-baseline {
-  @include justify-content(baseline);
+  @include align-items(baseline);
 }
 
 .flex-align-items-stretch {
-  @include justify-content(stretch);
+  @include align-items(stretch);
 }

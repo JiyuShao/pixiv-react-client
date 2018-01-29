@@ -1,36 +1,22 @@
 import React from 'react';
-
 import WeForm from 'components/we-form';
 import Toast from 'components/toast';
+import config from 'config';
 
 import './_login-page.scss';
 
 class LoginPage extends React.Component {
-  constructor() {
-    super();
-    Toast.success({
-      content: 'asdfsad',
-      duration:0
-    });
-  }
-
   submit = (formData) => {
-    console.log(formData);
-    return;
-
     Toast.loading('Loading...');
-    fetch(process.env.API_URL + '/login', {
+    fetch(config.API_ROOT + '/login', { //TODO: put login fetch to utils/helper
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        username: 'email',
-        password: 'password'
-      })
+      body: JSON.stringify(formData)
     }).then((res) => res.json()).then((res) => {
       if (res.status === 'success') {
-        sessionStorage.setItem('loggedin', 'true');
+        sessionStorage.setItem('loggedIn', 'true');
         sessionStorage.setItem('profile', JSON.stringify(res.response));
         Toast.success('Login succeed!', () => {
           this.props.history.push('/');
@@ -91,8 +77,8 @@ class LoginPage extends React.Component {
 
     return (
       <div className="login-container">
-        <div className='flexbox flex-direction-column flex-justify-content-center login-header'>
-          <img className="logo" src="/images/pixiv_logo.svg"/>
+        <div className='flexbox flex-direction-column flex-align-items-center login-header'>
+          <img className="logo" src="/images/pixiv_logo.svg" alt="pixiv_logo"/>
           <h2 style={{ textAlign: 'center' }}>Login Page</h2>
         </div>
 

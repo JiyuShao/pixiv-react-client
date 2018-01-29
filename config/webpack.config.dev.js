@@ -67,6 +67,9 @@ module.exports = {
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
+  externals: {
+    'config': JSON.stringify(require(paths.configFile)),
+  },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -91,6 +94,7 @@ module.exports = {
       'components': path.resolve(paths.appSrc, './components'),
       'containers': path.resolve(paths.appSrc, './containers'),
       'styles': path.resolve(paths.appSrc, './styles'),
+      'utils': path.resolve(paths.appSrc, './utils'),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).

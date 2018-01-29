@@ -1,0 +1,28 @@
+.profile-header {
+  background-color: rgba(45, 53, 62, 0.45);
+  color: white;
+  padding: 2vw 0;
+  position: relative;
+  .background-blur {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    filter: blur(4vw);
+    z-index: -1;
+  }
+}
+
+.profile-header-image {
+  border-radius: 100%;
+  height: 25vw;
+  margin: 2vw 0;
+}
+
+.profile-header-userdata {
+  text-align: center;
+  .email {
+    font-size: 2.9vw;
+    color: #93A0AD;
+  }
+}

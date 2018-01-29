@@ -1,10 +1,19 @@
 @import '_flex.scss';
 @import '_flex-class.scss';
-
-html,body {
-  min-height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 html {
   background-color: #eee;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
 }
