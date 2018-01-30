@@ -54,12 +54,12 @@ function notice(params) {
       ),
       closable: params.closable,
       onClose() {
-        if (params.onClose) {
-          params.onClose();
-        }
         notification.destroy();
         notification = null;
         messageInstance = null;
+        if (params.onClose) {
+          params.onClose();
+        }
       },
     });
   });

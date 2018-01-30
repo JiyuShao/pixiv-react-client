@@ -15,11 +15,12 @@ class LoginPage extends React.Component {
       },
       body: JSON.stringify(formData)
     }).then((res) => res.json()).then((res) => {
+      console.log(this.props);
+
       if (res.status === 'success') {
-        sessionStorage.setItem('loggedIn', 'true');
         sessionStorage.setItem('profile', JSON.stringify(res.response));
         Toast.success('Login succeed!', () => {
-          this.props.history.push('/');
+          this.props.history.push('/home');
         });
       } else {
         throw new Error('Login failed!');

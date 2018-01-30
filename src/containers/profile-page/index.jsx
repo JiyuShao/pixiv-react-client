@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Page, Cells, Cell, CellBody, CellHeader, CellsTitle, CellFooter
+  Cells, Cell, CellBody, CellsTitle, CellFooter
 } from 'react-weui';
-import Toast from 'components/toast';
 
 import './_profile-page.scss';
 
@@ -14,22 +13,12 @@ class ProfilePage extends React.Component {
       id: 666666,
       mail_address: '',
       profile_image_url: 'https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png',
-    },
-    userDetail: {
-      profile: {
-
-      }
     }
   };
 
   static propTypes = {
     user: PropTypes.object,
-    userDetail: PropTypes.object,
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -53,14 +42,6 @@ class ProfilePage extends React.Component {
           <Cell>
             <CellBody>User Id</CellBody>
             <CellFooter>{this.props.user.id}</CellFooter>
-          </Cell>
-          <Cell>
-            <CellBody>Gender</CellBody>
-            <CellFooter>{this.props.userDetail.profile.gender}</CellFooter>
-          </Cell>
-          <Cell>
-            <CellBody>Birth</CellBody>
-            <CellFooter>{this.props.userDetail.profile.birth}</CellFooter>
           </Cell>
           <Cell>
             <CellBody>Email</CellBody>

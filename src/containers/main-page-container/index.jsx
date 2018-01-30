@@ -1,10 +1,13 @@
 import _ from 'lodash';
-import React from 'react';
+import React from 'react'; import {
+  Link
+} from 'react-router-dom';
 import { Tab, TabBody, TabBar, TabBarItem, TabBarIcon, TabBarLabel, Article } from 'react-weui';
 
 import Toast from 'components/toast';
 import helper from 'utils/helper';
 import ProfilePage from 'containers/profile-page';
+import SearchPage from 'containers/search-page';
 
 class MainPageContainer extends React.Component {
   constructor(props) {
@@ -17,52 +20,12 @@ class MainPageContainer extends React.Component {
     this.state = {
       profile: profile,
       currentTab: availableTabs.includes(currentTab) ? currentTab : 'home',
-      tabData: {
-        home: {},
-        search: {},
-        profile: {}
-      }
     };
-
-    console.log('123');
-
-    Object.keys(this.state.tabData).map((currentTab) => {
-      this.initTabData(currentTab, true);
-    });
-  }
-
-  async initTabData(tab, constructFlag = false) {
-    console.log(this.state.tabData.profile);
-    let currentTabData = {};
-    if (tab === 'profile') {
-
-      if (_.isEmpty(this.state.tabData.profile)) {
-        try {
-          currentTabData = await helper.get(`/user/detail?user_id=${this.state.profile.user.id}`);
-        } catch (error) {
-          console.log(error);
-          Toast.cancel(error);
-        }
-      }
-    }
-    if (constructFlag) {
-      this.state.tabData[tab] = currentTabData;
-    } else {
-      this.setState({
-        ...this.state,
-        ...{
-          tabData: {
-            ...this.state.tabData,
-            ...{
-              [tab]: currentTabData
-            }
-          }
-        }
-      })
-    }
   }
 
   clickTabHandler(tab) {
+    console.log('clickTabHandler', tab);
+
     this.setState({
       ...this.state,
       currentTab: tab
@@ -79,52 +42,54 @@ class MainPageContainer extends React.Component {
               <h1>Home Page</h1>
             </Article>
             <Article style={{ display: this.state.currentTab === 'search' ? null : 'none' }}>
-              <h1>Search Page</h1>
+              <SearchPage />
             </Article>
             <Article style={{ display: this.state.currentTab === 'profile' ? null : 'none' }}>
               <ProfilePage user={{
                 ...this.state.profile.user, ...{
                   profile_image_url: this.state.profile.user.profile_image_urls.px_170x170
                 }
-              }} userDetail={this.state.tabData.profile.userDetail} />
+              }} />
             </Article>
           </TabBody>
 
           <TabBar>
             <TabBarItem
-              active={this.state.currentTab === 'home'}
-              onClick={() => {
-                this.clickTabHandler('home');
-              }}>
-              <TabBarIcon>
-                <img src={
-                  this.state.currentTab === 'home' ? 'https://png.icons8.com/ios/50/09bb07/home-filled.png' : 'https://png.icons8.com/ios/50/666666/home.png'
-                } alt="home" />
-              </TabBarIcon>
-              <TabBarLabel>Home</TabBarLabel>
+              active={this.state.currentTab === 'home'}>
+              <Link to="/home">
+                <TabBarIcon>
+                  <img src={
+                    this.state.currentTab === 'home' ? 'https://png.icons8.com/ios/50/09bb07/home-filled.png' : 'https://png.icons8.com/ios/50/666666/home.png'
+                  } alt="home" />
+                </TabBarIcon>
+                <TabBarLabel>Home</TabBarLabel>
+              </Link>
             </TabBarItem>
 
             <TabBarItem
-              label="search"
-              active={this.state.currentTab === 'search'}
-              icon={<img src={
-                this.state.currentTab === 'search' ? 'https://png.icons8.com/ios/50/09bb07/search-filled.png' : 'https://png.icons8.com/ios/50/666666/search.png'
-              } alt="search" />}
-              onClick={() => {
-                this.clickTabHandler('search');
-              }}
-            />
+              active={this.state.currentTab === 'search'}>
+              <Link to="/search">
+                <TabBarIcon>
+                  <img src={
+                    this.state.currentTab === 'search' ? 'https://png.icons8.com/ios/50/09bb07/search-filled.png' : 'https://png.icons8.com/ios/50/666666/search.png'
+                  } alt="search" />
+                </TabBarIcon>
+                <TabBarLabel>Search</TabBarLabel>
+              </Link>
+            </TabBarItem>
 
             <TabBarItem
-              label="profile"
-              active={this.state.currentTab === 'profile'}
-              icon={<img src={
-                this.state.currentTab === 'profile' ? 'https://png.icons8.com/ios/50/09bb07/gender-neutral-user-filled.png' : 'https://png.icons8.com/ios/50/666666/gender-neutral-user.png'
-              } alt="profile" />}
-              onClick={() => {
-                this.clickTabHandler('profile');
-              }}
-            />
+              active={this.state.currentTab === 'profile'}>
+              <Link to="/profile">
+                <TabBarIcon>
+                  <img src={
+                    this.state.currentTab === 'profile' ? 'https://png.icons8.com/ios/50/09bb07/gender-neutral-user-filled.png' : 'https://png.icons8.com/ios/50/666666/gender-neutral-user.png'
+                  } alt="profile" />
+                </TabBarIcon>
+                <TabBarLabel>Profile</TabBarLabel>
+              </Link>
+            </TabBarItem>
+
           </TabBar>
         </Tab>
       </div>

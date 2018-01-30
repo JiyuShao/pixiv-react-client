@@ -9,7 +9,7 @@ class Helper {
   }
 
   oauthApi (url, options, refreshFlag = true) {
-    if (sessionStorage.getItem('loggedIn') !== 'true') {
+    if (!sessionStorage.getItem('profile')) {
       return Promise.reject('Please Login First!');
     }
 
@@ -48,10 +48,12 @@ class Helper {
   }
 
   get(url) {
+    console.log(url);
     return this.oauthApi(config.API_ROOT + url);
   }
 
   post (url, postBody) {
+    console.log(url, postBody);
     return this.oauthApi(config.API_ROOT + url, {
       method: 'POST',
       headers: {
@@ -73,7 +75,6 @@ class Helper {
     }).then((res) => res.json()).then((res) => {
       if (res.status === 'success') {
         this.profile = res.response;
-        sessionStorage.setItem('loggedIn', 'true');
         sessionStorage.setItem('profile', JSON.stringify(this.profile));
         return this.profile;
       } else {
