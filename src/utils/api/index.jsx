@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import config from 'config';
 
-class Helper {
+class Api {
   constructor() {
     this.profile = JSON.parse(sessionStorage.getItem('profile'));
     this.get = this.get.bind(this);
@@ -25,7 +25,7 @@ class Helper {
     return fetch(url, options).then((res) => res.json()).then((res) => {
       console.log(url, res);
       if (res.status === 'success') {
-        return res.response;
+        return res.response; //we didn't return status when success
       } else if (res.message.statusCode === 400) { // access token expired
         if (refreshFlag) {
           return this.refreshAccessToken(refreshFlag).then(() => { // call api again
@@ -84,5 +84,4 @@ class Helper {
   }
 }
 
-let helper = new Helper();
-export default helper;
+export default new Api();

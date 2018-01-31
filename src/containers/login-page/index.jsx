@@ -1,3 +1,4 @@
+// login-page is not using react-redux
 import React from 'react';
 import WeForm from 'components/we-form';
 import Toast from 'components/toast';
@@ -8,7 +9,7 @@ import './_login-page.scss';
 class LoginPage extends React.Component {
   submit = (formData) => {
     Toast.loading('Loading...');
-    fetch(config.API_ROOT + '/login', { //TODO: put login fetch to utils/helper
+    fetch(config.API_ROOT + '/login', { //TODO: put login fetch to utils/api
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -31,13 +32,6 @@ class LoginPage extends React.Component {
         formData: {}
       })
     });
-  }
-
-  onErrorClick = (currentField) => {
-    if (this.state.validationError
-      && this.state.validationError[currentField]) {
-      Toast.cancel(this.state.validationError[currentField].errors[0].message);
-    }
   }
 
   render() {
