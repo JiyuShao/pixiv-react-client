@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
@@ -13,7 +12,9 @@ import _sagas from './sagas';
 
 import PrivateRoute from 'components/private-route';
 import LoginPage from 'containers/login-page';
-import MainPageContainer from 'containers/main-page-container';
+import SearchPage from 'containers/search-page';
+import ProfilePage from 'containers/profile-page';
+
 import 'weui';
 import 'react-weui/build/packages/react-weui.css';
 import 'styles/_common.scss';
@@ -53,10 +54,10 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <div>
             <Route path="/login" component={LoginPage} />
-            <PrivateRoute exact path="/" component={MainPageContainer} />
-            <PrivateRoute path="/home" component={MainPageContainer} />
-            <PrivateRoute path="/search" component={MainPageContainer} />
-            <PrivateRoute path="/profile" component={MainPageContainer} />
+            <PrivateRoute exact path="/" component={ProfilePage} />
+            <PrivateRoute path="/home" component={ProfilePage} />
+            <PrivateRoute path="/search" component={SearchPage} />
+            <PrivateRoute path="/profile" component={ProfilePage} />
           </div>
         </ConnectedRouter>
       </Provider>

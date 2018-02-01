@@ -1,0 +1,43 @@
+.tag-grids {
+  .weui-grid {
+    padding: 0;
+    width: 50vw;
+    height: 50vw;
+  }
+
+  .weui-grid:nth-child(1) {
+    width: 100vw;
+    height: 67vw;
+    img {
+      object-fit: none;
+      object-position: center;
+    }
+  }
+
+  .weui-grid__icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  .weui-grid__label {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    color: #fff;
+    text-align: center;
+    font-size: 4.8vw;
+    font-weight: bold;
+  }
+}
+
+.media-box-image-container {
+  background-color: #eee;
+}
+
+.gallery {
+  .gallery-close {
+    color: #fff;
+    border: none;
+  }
+}

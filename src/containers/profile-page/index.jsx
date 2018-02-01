@@ -1,58 +1,54 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Cells, Cell, CellBody, CellsTitle, CellFooter
 } from 'react-weui';
 
+import TabbarContainer from 'containers/tabbar-container';
 import './_profile-page.scss';
 
 class ProfilePage extends React.Component {
-  static defaultProps = {
-    user: {
-      name: 'Name',
-      id: 666666,
-      mail_address: '',
-      profile_image_url: 'https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png',
+  componentWillMount() {
+    let profile = JSON.parse(sessionStorage.getItem('profile'));
+    this.user = {
+      ...profile.user, ...{
+        profile_image_url: profile.user.profile_image_urls.px_170x170
+      }
     }
-  };
-
-  static propTypes = {
-    user: PropTypes.object,
-  };
+  }
 
   render() {
     return (
-      <div className="container">
+      <TabbarContainer currentTab="profile">
         <div className="flexbox flex-direction-column flex-align-items-center profile-header">
-          <div className="background-blur" style={{ backgroundImage: `url(${this.props.user.profile_image_url})` }}>
+          <div className="background-blur" style={{ backgroundImage: `url(${this.user.profile_image_url})` }}>
 
           </div>
-          <img className="profile-header-image" src={this.props.user.profile_image_url} alt="profile_image_url" />
+          <img className="profile-header-image" src={this.user.profile_image_url} alt="profile_image_url" />
           <div className="profile-header-userdata">
-            <span className="username">{`${this.props.user.name} (id: ${this.props.user.id})`}</span>
-            <p className="email">{`Email: ${this.props.user.mail_address}`}</p>
+            <span className="username">{`${this.user.name} (id: ${this.user.id})`}</span>
+            <p className="email">{`Email: ${this.user.mail_address}`}</p>
           </div>
         </div>
         <CellsTitle>Profile details</CellsTitle>
         <Cells>
           <Cell>
             <CellBody>Name</CellBody>
-            <CellFooter>{this.props.user.name}</CellFooter>
+            <CellFooter>{this.user.name}</CellFooter>
           </Cell>
           <Cell>
             <CellBody>User Id</CellBody>
-            <CellFooter>{this.props.user.id}</CellFooter>
+            <CellFooter>{this.user.id}</CellFooter>
           </Cell>
           <Cell>
             <CellBody>Email</CellBody>
-            <CellFooter>{this.props.user.mail_address}</CellFooter>
+            <CellFooter>{this.user.mail_address}</CellFooter>
           </Cell>
           <Cell>
             <CellBody>Is Premium</CellBody>
-            <CellFooter>{this.props.user.is_premium ? 'Yes' : 'No'}</CellFooter>
+            <CellFooter>{this.user.is_premium ? 'Yes' : 'No'}</CellFooter>
           </Cell>
         </Cells>
-      </div>
+      </TabbarContainer>
     );
   }
 }

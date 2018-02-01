@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
 import _api from 'utils/api';
 
@@ -11,6 +11,16 @@ function* fetchTrendingTags() {
   }
 }
 
+function* fetchSearchResult(action) {
+  try {
+    const response = yield call(_api.get, action.payload.url);
+    yield put({ type: "FETCH_SEARCH_RESULT__SUCCESS", response: response, searchText: action.payload.searchText });
+  } catch (e) {
+    yield put({ type: "FETCH_SEARCH_RESULT__FAILED", message: e.message });
+  }
+}
+
 export default [
   takeEvery('FETCH_TRENDING_TAGS', fetchTrendingTags),
+  takeEvery('FETCH_SEARCH_RESULT', fetchSearchResult),
 ];
