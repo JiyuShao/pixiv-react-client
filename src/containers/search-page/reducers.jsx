@@ -1,10 +1,19 @@
 import Toast from 'components/toast';
 
 const defaultState = {
+  tab: 'tags',
   trendingTags: [],
   searchText: '',
-  nextSearchUrl: '',
-  searchResult: [],
+  sortOptions: {
+    search_target: 'partial_match_for_tags',
+    sort: 'date_desc',
+    word: '',
+  },
+  searchResult: {
+    searchText: '',
+    next_url: '',
+    records: [],
+  },
   galleryDisplay: false,
   galleryDisplayUrl: '',
 };
@@ -33,30 +42,41 @@ function fetchTrendingTags(state, action, status) {
 function textChange(state, action) {
   return {
     ...state,
-    ...{
-      searchText: (action.payload) ?action.payload : ''
-    }
+    tab: 'tags',
+    searchText: (action.payload) ? action.payload : '',
+    searchResult: defaultState.searchResult,
   }
 }
 
 function fetchSearchResult(state, action, status) {
   let finalState = state;
+
   if (status) {
     finalState = {
       ...state,
-      ...{
+      tab: 'result',
+      searchText: action.searchText,
+      sortOptions: {
+        ...state.sortOptions,
+        word: action.searchText,
+      },
+      searchResult: {
         searchText: action.searchText,
-        nextSearchUrl: action.response.next_url,
-        searchResult: action.response.illusts,
-      }
+        next_url: action.response.next_url,
+        records: [
+          ...(state.searchResult.searchText === action.searchText ? state.searchResult.records : []),
+          ...action.response.illusts
+        ],
+      },
     };
   } else {
     finalState = {
       ...state,
       ...{
-        searchText: defaultState.searchText,
-        nextSearchUrl: defaultState.nextSearchUrl,
+        tab: 'result',
+        searchText: action.searchText,
         searchResult: defaultState.searchResult,
+        sortOptions: defaultState.sortOptions,
       }
     }
     Toast.cancel(action.message);

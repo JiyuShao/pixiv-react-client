@@ -1,6 +1,8 @@
 import React from 'react';
 import Notification from 'rmc-notification';
 
+import Icon from 'components/icon';
+
 import './_toast.scss';
 
 let messageInstance;
@@ -23,6 +25,7 @@ function notice(params) {
     type: 'success',
     duration: 3,
     closable: true,
+    onOpen: () => { },
     onClose: () => { }
   };
 
@@ -38,6 +41,11 @@ function notice(params) {
   params.icon = (iconTypes[params.type]) ? iconTypes[params.type] : iconTypes['success'];
 
   getMessageInstance((notification) => {
+    if (params.onOpen) {
+      params.onOpen();
+    }
+    document.documentElement.classList.add('no-scroll');
+
     messageInstance = notification;
 
     notification.notice({
@@ -47,19 +55,21 @@ function notice(params) {
         <div className="weui-toast-container">
           <div className="weui-mask_transparent"></div>
           <div className={`weui-toast ${(params.type === 'text') ? 'weui-toast_text' : 'weui-toast_normal'}`}>
-            <i className={`weui-icon_toast ${params.icon}`}></i>
+            <Icon className="weui-icon_toast" type={params.icon}></Icon>
             <p className="weui-toast_content">{params.content}</p>
           </div>
         </div>
       ),
       closable: params.closable,
       onClose() {
-        notification.destroy();
-        notification = null;
-        messageInstance = null;
         if (params.onClose) {
           params.onClose();
         }
+
+        document.documentElement.classList.remove('no-scroll');
+        notification.destroy();
+        notification = null;
+        messageInstance = null;
       },
     });
   });
@@ -104,6 +114,7 @@ export default {
     if (messageInstance) {
       messageInstance.destroy();
       messageInstance = null;
+      document.documentElement.classList.remove('no-scroll');
     }
   },
 };

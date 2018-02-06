@@ -11,23 +11,22 @@ function textChange(text) {
   }
 }
 
-function fetchSearchResult(text) {
-  let url = '/v1/search/illust?';
-  let defaultParams = {
-    search_target: 'partial_match_for_tags',
-    sort: 'date_desc',
-    word: text,
-  };
-  for (const currentParam in defaultParams) {
-    if (defaultParams.hasOwnProperty(currentParam)) {
-      url += `${currentParam}=${defaultParams[currentParam]}&`;
-    }
+function fetchSearchResult(params) {
+  let { text, sortOptions, searchResult } = params;
+  let url = '';
+  if (sortOptions.word === text && searchResult.next_url) { //same search
+    url = searchResult.next_url;
+  } else {
+    sortOptions.word = text;
+    url = '/v1/search/illust?' + Object.keys(sortOptions).map(function (key) {
+      return (typeof sortOptions[key] === 'undefined' || sortOptions[key] === '') ? '' : `${key}=${sortOptions[key]}`;
+    }).join('&');
   }
   return {
     type: 'FETCH_SEARCH_RESULT',
     payload: {
       url: url,
-      searchText: text
+      searchText: text,
     }
   }
 }

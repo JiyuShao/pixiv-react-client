@@ -7,4 +7,20 @@ body {
 
 html {
   background-color: #eee;
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+// text-align related
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right{
+  text-align: right;
+}
+
+.word-break-break-all {
+  word-break: break-all;
 }

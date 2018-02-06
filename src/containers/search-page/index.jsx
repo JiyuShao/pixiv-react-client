@@ -21,19 +21,13 @@ import {
   Gallery,
 } from 'react-weui';
 
+import InfiniteLoader from 'components/infinite-loader';
+import IllustCell from 'components/illust-cell';
 import TabbarContainer from 'containers/tabbar-container';
 
 import './_search-page.scss';
 
 import _actions from './actions';
-
-const CellMore = () => (
-  <Cell access link>
-    <CellBody>More</CellBody>
-    <CellFooter />
-  </Cell>
-)
-
 class SearchPage extends React.Component {
   componentWillMount() {
     this.props.fetchTrendingTags();
@@ -41,55 +35,76 @@ class SearchPage extends React.Component {
 
   render() {
     return (
-      <TabbarContainer currentTab="search">
+      <TabbarContainer className="search-page-container" currentTab="search">
         <SearchBar
+          className="search-bar"
           placeholder={this.props.searchText ? this.props.searchText : "Enter keyword"}
           lang={{
             cancel: 'Cancel'
           }}
           onChange={this.props.textChange}
           onCancel={this.props.textChange}
-          onSubmit={this.props.fetchSearchResult}
+          onSubmit={(text) => {
+            this.props.fetchSearchResult({
+              text: text,
+              sortOptions: this.props.sortOptions,
+              searchResult: this.props.searchResult,
+            })
+          }}
         />
 
-        <Panel style={{ display: (this.props.searchText && this.props.searchResult.length > 0) ? null : 'none' }}>
-          <PanelHeader>
-            {`Search Key: ${this.props.searchText}`}
-          </PanelHeader>
-          <PanelBody>
-            {
-              this.props.searchResult.length > 0 ?
-                this.props.searchResult.map((currentResult, index) => {
+        <InfiniteLoader
+          style={{
+            display: (this.props.tab === 'result') ? null : 'none',
+            height: document.documentElement.clientHeight - document.documentElement.clientWidth * 0.2506  // 0.355 is navbar + search bar + search tab ?vw
+          }}
+          onLoadMore={() => {
+            this.props.fetchSearchResult({
+              text: this.props.searchText,
+              sortOptions: this.props.sortOptions,
+              searchResult: this.props.searchResult,
+            })
+          }}
+          // scrollTop={undefined}
+          finish={!this.props.searchResult.next_url}
+        >
+          <Panel className="search-result-container" style={{}}>
+            <PanelHeader>
+              {`Search Key: ${this.props.searchText}`}
+            </PanelHeader>
+            <PanelBody>
+              {
+                this.props.searchResult.records.map((currentResult, index) => {
                   return (
-                    <MediaBox key={index} type="appmsg" href="javascript:void(0);" onClick={() => {
-                      this.props.galleryToggle(currentResult.image_urls.large);
-                    }}>
-                      <MediaBoxHeader className="media-box-image-container">
-                        <img src={currentResult.image_urls.square_medium} />
-                      </MediaBoxHeader>
-                      <MediaBoxBody>
-                        <MediaBoxTitle>{currentResult.title}</MediaBoxTitle>
-                        <MediaBoxDescription>
-                          {currentResult.caption}
-                        </MediaBoxDescription>
-                      </MediaBoxBody>
-                    </MediaBox>
+                    <IllustCell
+                      key={index}
+                      image={currentResult.image_urls.square_medium}
+                      original_image={currentResult.image_urls.large}
+                      title={currentResult.title}
+                      description={currentResult.caption}
+                      tags={currentResult.tags.map(e => e.name).join(', ')}
+                      is_bookmarked={currentResult.is_bookmarked}
+                      onClick={() => {
+                        this.props.galleryToggle(currentResult.image_urls.large);
+                      }}
+                    />
                   )
                 })
-                : <MediaBox>Can't find any！</MediaBox>
-            }
-          </PanelBody>
-          <PanelFooter href="javascript:void(0);">
-            <CellMore />
-          </PanelFooter>
-        </Panel>
+              }
+            </PanelBody>
+          </Panel>
+        </InfiniteLoader>
 
-        <div className="weui-grids tag-grids" style={{ display: (this.props.searchText && this.props.searchResult.length > 0) ? 'none' : null }}>
+        <div className="weui-grids tag-grids" style={{ display: (this.props.tab === 'tags') ? null : 'none' }}>
           {
             this.props.trendingTags.map((currentTag, index) => {
               return (
                 <a key={index} className="weui-grid" href="javascript:;" onClick={() => {
-                  this.props.fetchSearchResult(currentTag.tag);
+                  this.props.fetchSearchResult({
+                    text: currentTag.tag,
+                    sortOptions: this.props.sortOptions,
+                    searchResult: this.props.searchResult,
+                  });
                 }}>
                   <div className="weui-grid__icon">
                     <img src={currentTag.illust.image_urls[(index === 0) ? 'medium' : 'square_medium']} />
@@ -118,10 +133,11 @@ class SearchPage extends React.Component {
 const mapStateToProps = (state) => {
   let currentComponentState = state['search-page'];
   return {
+    tab: currentComponentState.tab,
     trendingTags: currentComponentState.trendingTags,
     searchText: currentComponentState.searchText,
+    sortOptions: currentComponentState.sortOptions,
     searchResult: currentComponentState.searchResult,
-    nextSearchUrl: currentComponentState.nextSearchUrl,
     galleryDisplay: currentComponentState.galleryDisplay,
     galleryDisplayUrl: currentComponentState.galleryDisplayUrl,
   };

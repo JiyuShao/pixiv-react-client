@@ -1,6 +1,6 @@
 %weui-icon_toast_icon {
   color: #fff;
-  font-size: 2.4em;
+  font-size: 10.24vw;
 }
 
 .weui-toast-container {
@@ -17,7 +17,7 @@
 .weui-toast.weui-toast_normal {
   position: initial;
   margin: initial;
-  margin-top: -8em;
+  margin-top: -34.134vw;
   top: initial;
   left: initial;
 }
@@ -27,17 +27,17 @@
   min-height: initial;
   width: auto;
   max-width: 60%;
-  padding: 0 0.5em;
+  padding: 0 2.13vw;
+  .weui-icon_toast {
+    display: none;
+  }
 }
 
-.weui-icon_toast.weui-icon-success:before,
-.weui-icon_toast.weui-icon-cancel:before,
-.weui-icon_toast.weui-icon-forbidden:before,
-.weui-icon_toast.weui-icon-loading:before {
+.weui-icon_toast {
   @extend %weui-icon_toast_icon;
 }
 
-.weui-icon_toast.weui-icon-warn:before {
+.weui-icon_toast.weui-icon-warn .weui-icon_before {
   @extend %weui-icon_toast_icon;
   color: #f6383a;
 }

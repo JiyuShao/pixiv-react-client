@@ -1,0 +1,24 @@
+.rating-container {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  .star {
+    height: 4.266vw;
+    width: 4.266vw;
+    display: inline-block;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .rating-group__empty {
+    position: absolute;
+    .star {
+      background-image: url(https://png.icons8.com/ios/50/f68d1a/star.png);
+    }
+  }
+  .rating-group__fill {
+    overflow: hidden;
+    .star {
+      background-image: url(https://png.icons8.com/ios/50/f68d1a/star-filled.png);
+    }
+  }
+}

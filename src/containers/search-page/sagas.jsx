@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 
+import wrapper from 'utils/generater-wrapper';
 import _api from 'utils/api';
 
 function* fetchTrendingTags() {
@@ -21,6 +22,6 @@ function* fetchSearchResult(action) {
 }
 
 export default [
-  takeEvery('FETCH_TRENDING_TAGS', fetchTrendingTags),
-  takeEvery('FETCH_SEARCH_RESULT', fetchSearchResult),
+  takeEvery('FETCH_TRENDING_TAGS', wrapper(fetchTrendingTags)),
+  takeEvery('FETCH_SEARCH_RESULT', wrapper(fetchSearchResult)),
 ];

@@ -120,3 +120,8 @@
 .flex-align-items-stretch {
   @include align-items(stretch);
 }
+
+// .flex-1
+.flex-1 {
+  flex: 1;
+}

@@ -1,0 +1,42 @@
+.illust-cell.weui-cell {
+  padding-right: 5vw;
+  .illust-cell__hd {
+    margin-right: 1.33vw;
+    img {
+      width: 20.6vw;
+      height: 20.6vw;
+      border-radius: 1.47vw;
+    }
+  }
+  .illust-cell__bd {
+    .title {
+      height: 10vw;
+      line-height: 1.2;
+      font-size: 5vw;
+      font-weight: 600;
+      .word-break-break-all span {
+        word-break: break-all;
+      }
+    }
+    .title__extra {
+      .is-bookmarked {
+        height: 5.33vw;
+        width: 5.33vw;
+      }
+    }
+    .description {
+      height: 5.6vw;
+      font-size: 3.5vw;
+    }
+    .tags {
+      position: relative;
+      height: 3.2vw;
+      color: #666;
+      font-size: 3.2vw;
+    }
+  }
+  .illust-cell__ft {
+    position: absolute;
+    right: 2.5vw;
+  }
+}

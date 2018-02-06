@@ -1,3 +1,5 @@
+@import '~styles/variables';
+// trending tag girds
 .tag-grids {
   .weui-grid {
     padding: 0;
@@ -31,13 +33,19 @@
   }
 }
 
-.media-box-image-container {
-  background-color: #eee;
-}
-
+// gallery
 .gallery {
   .gallery-close {
     color: #fff;
     border: none;
   }
 }
+
+// search-bar search-result
+.search-result-container {
+  margin-top: 0;
+  .media-box-image-container {
+    background-color: #eee;
+  }
+}
+
