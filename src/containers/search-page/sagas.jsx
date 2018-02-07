@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import wrapper from 'utils/generater-wrapper';
+import wrapper from 'utils/generator-wrapper';
 import _api from 'utils/api';
 
 function* fetchTrendingTags() {

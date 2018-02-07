@@ -27,11 +27,18 @@ class Icon extends React.Component {
     "weui-picker__hd": "EA08"
   };
 
+  static iconMapping = {
+    'weui-loading': <div className="weui_loading"><i className="weui-loading weui-icon_toast"></i></div>
+  }
+
   render() {
-    let { className, type, ...restProps } = this.props;
     return (
-      <span {...restProps} className={classnames(['weui-icon', className])}>
-        {(Icon.iconCode[type]) ? String.fromCodePoint(parseInt(Icon.iconCode[type], 16)) : ''}
+      <span {...this.props} className={classnames(['weui-icon', this.props.className])}>
+        {(Icon.iconCode[this.props.type]) ? (
+          String.fromCodePoint(parseInt(Icon.iconCode[this.props.type], 16))
+        ) : (
+          Icon.iconMapping[this.props.type] ? Icon.iconMapping[this.props.type] : 'Icon'
+        )}
       </span>
     );
   }

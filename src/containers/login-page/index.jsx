@@ -2,6 +2,7 @@
 import React from 'react';
 import WeForm from 'components/we-form';
 import Toast from 'components/toast';
+import Image from 'components/image';
 import config from 'config';
 
 import './_login-page.scss';
@@ -73,7 +74,7 @@ class LoginPage extends React.Component {
     return (
       <div className="login-container">
         <div className='flexbox flex-direction-column flex-align-items-center login-header'>
-          <img className="logo" src="/images/pixiv_logo.svg" alt="pixiv_logo"/>
+          <Image className="logo" src="/images/pixiv_logo.svg" alt="pixiv_logo"/>
           <h2 style={{ textAlign: 'center' }}>Login Page</h2>
         </div>
 

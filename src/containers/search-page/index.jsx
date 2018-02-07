@@ -8,19 +8,11 @@ import {
   Panel,
   PanelHeader,
   PanelBody,
-  PanelFooter,
-  MediaBox,
-  MediaBoxHeader,
-  MediaBoxBody,
-  MediaBoxTitle,
-  MediaBoxDescription,
-  Cell,
-  CellBody,
-  CellFooter,
   Button,
   Gallery,
 } from 'react-weui';
 
+import Image from 'components/image';
 import InfiniteLoader from 'components/infinite-loader';
 import IllustCell from 'components/illust-cell';
 import TabbarContainer from 'containers/tabbar-container';
@@ -68,7 +60,7 @@ class SearchPage extends React.Component {
           // scrollTop={undefined}
           finish={!this.props.searchResult.next_url}
         >
-          <Panel className="search-result-container" style={{}}>
+          <Panel className="search-result-container">
             <PanelHeader>
               {`Search Key: ${this.props.searchText}`}
             </PanelHeader>
@@ -107,7 +99,7 @@ class SearchPage extends React.Component {
                   });
                 }}>
                   <div className="weui-grid__icon">
-                    <img src={currentTag.illust.image_urls[(index === 0) ? 'medium' : 'square_medium']} />
+                    <Image src={currentTag.illust.image_urls[(index === 0) ? 'medium' : 'square_medium']} />
                   </div>
                   <p className="weui-grid__label">{currentTag.tag}</p>
                 </a>

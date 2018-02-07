@@ -10,7 +10,8 @@
   .weui-grid:nth-child(1) {
     width: 100vw;
     height: 67vw;
-    img {
+    overflow: hidden;
+    .image img {
       object-fit: none;
       object-position: center;
     }

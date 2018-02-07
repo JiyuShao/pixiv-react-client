@@ -1,13 +1,15 @@
 module.exports = {
-  "plugins": {
-    "postcss-plugin": {},
+  'plugins': {
+    'postcss-plugin': {},
     'postcss-flexbugs-fixes': {},
-    "postcss-aspect-ratio-mini": {},
-    "postcss-write-svg": {
+    'postcss-aspect-ratio-mini': {},
+    'postcss-write-svg': {
       utf8: false
     },
-    "postcss-cssnext": {autoprefixer:false},
-    "postcss-px-to-viewport": {
+    'postcss-cssnext': {
+      autoprefixer: false
+    },
+    'postcss-px-to-viewport': {
       viewportWidth: 375, // (Number) The width of the viewport.
       viewportHeight: 667, // (Number) The height of the viewport.
       unitPrecision: 3, // (Number) The decimal numbers to allow the REM units to grow to.
@@ -16,11 +18,15 @@ module.exports = {
       minPixelValue: 1, // (Number) Set the minimum pixel value to replace.
       mediaQuery: false // (Boolean) Allow px to be converted in media queries.
     },
-    // "postcss-viewport-units": {},
-    "cssnano": {
-      preset: "advanced",
+    'postcss-viewport-units': {},
+    'cssnano': {
+      preset: 'advanced',
       autoprefixer: false,
-      "postcss-zindex": false
-    }
+      'postcss-zindex': false
+    },
+    'postcss-reporter': {
+      clearReportedMessages: true,
+      plugins: ['postcss-viewport-units']
+    },
   }
 }

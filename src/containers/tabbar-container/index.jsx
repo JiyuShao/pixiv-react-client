@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { Tab, TabBody, TabBar, TabBarItem, TabBarIcon, TabBarLabel, Article } from 'react-weui';
-
+import Image from 'components/image';
 import './_tabbar-container.scss';
 
 class TabbarContainer extends React.Component {
@@ -28,7 +28,7 @@ class TabbarContainer extends React.Component {
               this.props.push('/home');
             }}>
             <TabBarIcon>
-              <img src={
+              <Image src={
                 this.props.currentTab === 'home' ? 'https://png.icons8.com/ios/50/09bb07/home-filled.png' : 'https://png.icons8.com/ios/50/666666/home.png'
               } alt="home" />
             </TabBarIcon>
@@ -41,7 +41,7 @@ class TabbarContainer extends React.Component {
               this.props.push('/search');
             }}>
             <TabBarIcon>
-              <img src={
+              <Image src={
                 this.props.currentTab === 'search' ? 'https://png.icons8.com/ios/50/09bb07/search-filled.png' : 'https://png.icons8.com/ios/50/666666/search.png'
               } alt="search" />
             </TabBarIcon>
@@ -54,7 +54,7 @@ class TabbarContainer extends React.Component {
               this.props.push('/profile');
             }}>
             <TabBarIcon>
-              <img src={
+              <Image src={
                 this.props.currentTab === 'profile' ? 'https://png.icons8.com/ios/50/09bb07/gender-neutral-user-filled.png' : 'https://png.icons8.com/ios/50/666666/gender-neutral-user.png'
               } alt="profile" />
             </TabBarIcon>

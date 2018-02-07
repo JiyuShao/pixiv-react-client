@@ -1,11 +1,10 @@
 import React from 'react';
-import Truncate from 'react-truncate';
+import MultiClamp from 'react-multi-clamp';
 
-import Rating from 'components/rating';
+import Image from 'components/image';
 import './_illust-cell.scss';
 
-
-class StoreCell extends React.Component {
+class IllustCell extends React.Component {
   static defaultProps = {
     onClick: () => { },
     image: '',
@@ -20,19 +19,19 @@ class StoreCell extends React.Component {
   render() {
     let isBookmarked = '';
     if (this.props.is_bookmarked) {
-      isBookmarked = <img className="is-bookmarked" src="https://png.icons8.com/ios/50/ef5011/hearts-filled.png" alt="is bookmarked" />
+      isBookmarked = <Image className="is-bookmarked" src="https://png.icons8.com/ios/50/ef5011/hearts-filled.png" alt="is bookmarked" />
     } else {
-      isBookmarked = <img className="is-bookmarked" src="https://png.icons8.com/ios/50/cccccc/hearts.png" alt="not bookmarked" />
+      isBookmarked = <Image className="is-bookmarked" src="https://png.icons8.com/ios/50/cccccc/hearts.png" alt="not bookmarked" />
     }
     return (
       <div className="weui-cell weui-cell_access illust-cell" onClick={this.props.onClick}>
         <div className="weui-cell__hd illust-cell__hd flexbox">
-          <img onError={e => e.target.src = this.props.errorImage} src={this.props.image} />
+          <Image onError={e => e.target.src = this.props.errorImage} src={this.props.image} />
         </div>
         <div className="weui-cell__bd illust-cell__bd">
           <div className="flexbox title">
             <div className="flex-1 word-break-break-all">
-              <Truncate lines={2} ellipsis="...">{this.props.title}{this.props.title}{this.props.title}</Truncate>
+              <MultiClamp clamp={2} ellipsis="..." disableCssClamp={true}>{this.props.title}{this.props.title}{this.props.title}</MultiClamp>
             </div>
 
             <div className="title__extra">
@@ -41,10 +40,10 @@ class StoreCell extends React.Component {
           </div>
 
           <div className="description">
-            <Truncate lines={1} ellipsis="...">{this.props.description}</Truncate>
+            <MultiClamp clamp={1} ellipsis="..." disableCssClamp={true}>{this.props.description}</MultiClamp>
           </div>
           <div className="tags">
-            <Truncate lines={1} ellipsis="...">{this.props.tags}</Truncate>
+            <MultiClamp clamp={1} ellipsis="..." disableCssClamp={true}>{this.props.tags}</MultiClamp>
           </div>
         </div>
         <div className="weui-cell__ft illust-cell__ft"></div>
@@ -53,4 +52,4 @@ class StoreCell extends React.Component {
   }
 }
 
-export default StoreCell;
+export default IllustCell;

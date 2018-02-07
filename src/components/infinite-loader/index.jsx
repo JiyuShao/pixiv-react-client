@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
 import { LoadMore } from 'react-weui';
@@ -69,7 +68,6 @@ class InfiniteLoader extends Component {
   constructor(props) {
     super(props);
 
-    let scrollTimer = (e) => { };
     this.scrollHandle = this.scrollHandle.bind(this);
   }
 

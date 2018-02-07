@@ -3,6 +3,7 @@ import {
   Cells, Cell, CellBody, CellsTitle, CellFooter
 } from 'react-weui';
 
+import Image from 'components/image';
 import TabbarContainer from 'containers/tabbar-container';
 import './_profile-page.scss';
 
@@ -23,7 +24,7 @@ class ProfilePage extends React.Component {
           <div className="background-blur" style={{ backgroundImage: `url(${this.user.profile_image_url})` }}>
 
           </div>
-          <img className="profile-header-image" src={this.user.profile_image_url} alt="profile_image_url" />
+          <Image className="profile-header-image" src={this.user.profile_image_url} alt="profile_image_url" />
           <div className="profile-header-userdata">
             <span className="username">{`${this.user.name} (id: ${this.user.id})`}</span>
             <p className="email">{`Email: ${this.user.mail_address}`}</p>

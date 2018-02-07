@@ -12,6 +12,7 @@ import _sagas from './sagas';
 
 import PrivateRoute from 'components/private-route';
 import LoginPage from 'containers/login-page';
+import HomePage from 'containers/home-page';
 import SearchPage from 'containers/search-page';
 import ProfilePage from 'containers/profile-page';
 
@@ -54,8 +55,8 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <div>
             <Route path="/login" component={LoginPage} />
-            <PrivateRoute exact path="/" component={ProfilePage} />
-            <PrivateRoute path="/home" component={ProfilePage} />
+            <PrivateRoute exact path="/" component={HomePage} />
+            <PrivateRoute path="/home" component={HomePage} />
             <PrivateRoute path="/search" component={SearchPage} />
             <PrivateRoute path="/profile" component={ProfilePage} />
           </div>

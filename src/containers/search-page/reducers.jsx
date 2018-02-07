@@ -1,22 +1,24 @@
 import Toast from 'components/toast';
 
-const defaultState = {
-  tab: 'tags',
-  trendingTags: [],
-  searchText: '',
-  sortOptions: {
-    search_target: 'partial_match_for_tags',
-    sort: 'date_desc',
-    word: '',
-  },
-  searchResult: {
+function getDefaultState() {
+  return {
+    tab: 'tags',
+    trendingTags: [],
     searchText: '',
-    next_url: '',
-    records: [],
-  },
-  galleryDisplay: false,
-  galleryDisplayUrl: '',
-};
+    sortOptions: {
+      search_target: 'partial_match_for_tags',
+      sort: 'date_desc',
+      word: '',
+    },
+    searchResult: {
+      searchText: '',
+      next_url: '',
+      records: [],
+    },
+    galleryDisplay: false,
+    galleryDisplayUrl: '',
+  };
+}
 
 function fetchTrendingTags(state, action, status) {
   let finalState = state;
@@ -31,7 +33,7 @@ function fetchTrendingTags(state, action, status) {
     finalState = {
       ...state,
       ...{
-        trendingTags: defaultState.trendingTags,
+        trendingTags: getDefaultState().trendingTags,
       }
     }
     Toast.cancel(action.message);
@@ -44,7 +46,7 @@ function textChange(state, action) {
     ...state,
     tab: 'tags',
     searchText: (action.payload) ? action.payload : '',
-    searchResult: defaultState.searchResult,
+    searchResult: getDefaultState().searchResult,
   }
 }
 
@@ -75,8 +77,8 @@ function fetchSearchResult(state, action, status) {
       ...{
         tab: 'result',
         searchText: action.searchText,
-        searchResult: defaultState.searchResult,
-        sortOptions: defaultState.sortOptions,
+        searchResult: getDefaultState().searchResult,
+        sortOptions: getDefaultState().sortOptions,
       }
     }
     Toast.cancel(action.message);
@@ -95,7 +97,7 @@ function galleryToggle(state, action) {
 }
 
 export default {
-  'search-page': (state = defaultState, action) => {
+  'search-page': (state = getDefaultState(), action) => {
     switch (action.type) {
       case 'FETCH_TRENDING_TAGS__SUCCESS':
         return fetchTrendingTags(state, action, true);
