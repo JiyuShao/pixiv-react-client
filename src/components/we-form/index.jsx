@@ -23,21 +23,22 @@ class WeForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    let initState = {
       values: {},
       errors: {},
       langs: {},
       form: {},
-    }
-
+    };
     this.props.schema.forEach((section, index) => {
       let items = section.properties;
       items.map((item, i) => {
         if (typeof item.default !== 'undefined') {
-          this.state.values[item.id] = item.default;
+          initState.values[item.id] = item.default;
         }
       });
     });
+
+    this.state = initState;
 
     this.renderForm = this.renderForm.bind(this);
     this.renderActions = this.renderActions.bind(this);
@@ -113,7 +114,6 @@ class WeForm extends Component {
               {this.getErrorStyle(item.id, sectionIndex) ? <CellFooter><i className="weui-icon-warn"></i></CellFooter> : false}
             </Cell>
           )
-          break;
         case 'password':
           return (
             <Cell key={i} className={this.getErrorStyle(item.id, sectionIndex)}>
@@ -128,7 +128,6 @@ class WeForm extends Component {
               {this.getErrorStyle(item.id, sectionIndex) ? <CellFooter><i className="weui-icon-warn"></i></CellFooter> : false}
             </Cell>
           )
-          break;
         case 'number':
           return (
             <Cell key={i} className={this.getErrorStyle(item.id, sectionIndex)}>
@@ -143,7 +142,6 @@ class WeForm extends Component {
               {this.getErrorStyle(item.id, sectionIndex) ? <CellFooter><i className="weui-icon-warn"></i></CellFooter> : false}
             </Cell>
           )
-          break;
         case 'date':
           return (
             <Cell key={i} className={this.getErrorStyle(item.id, sectionIndex)}>
@@ -158,7 +156,6 @@ class WeForm extends Component {
               {this.getErrorStyle(item.id, sectionIndex) ? <CellFooter><i className="weui-icon-warn"></i></CellFooter> : false}
             </Cell>
           )
-          break;
         case 'datetime':
           return (
             <Cell key={i} className={this.getErrorStyle(item.id, sectionIndex)}>
@@ -173,7 +170,6 @@ class WeForm extends Component {
               {this.getErrorStyle(item.id, sectionIndex) ? <CellFooter><i className="weui-icon-warn"></i></CellFooter> : false}
             </Cell>
           )
-          break;
         case 'textarea':
           return (
             <Cell key={i} className={this.getErrorStyle(item.id, sectionIndex)}>
@@ -185,8 +181,6 @@ class WeForm extends Component {
               </CellBody>
             </Cell>
           )
-          break;
-          break;
         case 'select':
           return (
             <Cell key={i}
@@ -204,7 +198,6 @@ class WeForm extends Component {
               </CellBody>
             </Cell>
           )
-          break;
         case 'checkbox':
           return (
             <label key={i} className="weui-cell weui-check__label">
@@ -218,7 +211,6 @@ class WeForm extends Component {
               </div>
             </label>
           )
-          break;
       }
     })
   }
@@ -258,7 +250,7 @@ class WeForm extends Component {
               let str = values[item.id];
               let ret = true;
               let valuedate = new Date(values[item.id]);
-              if (!valuedate instanceof Date || isNaN(valuedate.valueOf())) ret = false;
+              if (!(valuedate instanceof Date) || isNaN(valuedate.valueOf())) ret = false;
               if (ret) {
                 if (typeof params[0] !== 'undefined') {
                   let minDate = new Date(params[0]).getTime();
@@ -339,7 +331,7 @@ class WeForm extends Component {
       </section>
     )
   }
-};
+}
 
 var defaultLangs = {
   'en': {

@@ -19,6 +19,7 @@
     "react/prop-types": 0,
     "no-class-assign": 0,
     "no-extra-semi": 1,
-    "react/no-string-refs": 0
+    "react/no-string-refs": 0,
+    "no-case-declarations": 0
   }
 }

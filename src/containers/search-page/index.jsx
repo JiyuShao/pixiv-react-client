@@ -125,7 +125,7 @@ class SearchPage extends React.Component {
       </TabbarContainer>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   let currentComponentState = state['search-page'];
