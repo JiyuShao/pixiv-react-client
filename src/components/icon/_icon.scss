@@ -1,6 +1,18 @@
 .weui-icon {
   font-family: weui;
-  .weui-icon_toast.weui-loading {
+  & .weui-icon_toast.weui-loading {
     margin: 0;
+  }
+}
+
+.icon-image {
+  height: 6vw;
+  width: 6vw;
+}
+
+.icon-svg {
+  svg {
+    height: 100%;
+    width: 100%;
   }
 }

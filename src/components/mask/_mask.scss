@@ -2,10 +2,10 @@
 
 .mask {
   position: fixed;
-  z-index: $mask-z-index;
+  z-index: 999;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
-  background: $mask-color;
+  background: rgba(0,0,0,.6),
 }

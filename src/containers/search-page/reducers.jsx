@@ -86,16 +86,6 @@ function fetchSearchResult(state, action, status) {
   return finalState;
 }
 
-function galleryToggle(state, action) {
-  return {
-    ...state,
-    ...{
-      galleryDisplay: action.payload ? true : !state.galleryDisplay,
-      galleryDisplayUrl: action.payload ? action.payload : state.galleryDisplayUrl,
-    }
-  };
-}
-
 export default {
   'search-page': (state = getDefaultState(), action) => {
     switch (action.type) {
@@ -109,8 +99,6 @@ export default {
         return fetchSearchResult(state, action, true);
       case 'FETCH_SEARCH_RESULT__FAILED':
         return fetchSearchResult(state, action, false);
-      case 'GALLERY_TOGGLE':
-        return galleryToggle(state, action);
       default:
         return state
     }

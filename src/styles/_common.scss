@@ -1,8 +1,7 @@
-@import '_flex.scss';
-@import '_flex-class.scss';
-html,
-body {
-  height: 100%;
+@import 'flex-class.scss';
+//fix safari Viewport Units Buggyfill bug
+img {
+  content: normal !important;
 }
 
 html {
@@ -17,7 +16,11 @@ html {
   text-align: center;
 }
 
-.text-align-right{
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
   text-align: right;
 }
 

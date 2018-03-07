@@ -13,8 +13,12 @@ class TabbarContainer extends React.Component {
   }
 
   render() {
+    let {
+      className
+    } = this.props;
+
     return (
-      <Tab className="main-page-container">
+      <Tab className={`main-page-container ${className}`}>
         <TabBody>
           <Article>
             {this.props.children}

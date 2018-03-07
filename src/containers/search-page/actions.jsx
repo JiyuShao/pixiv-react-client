@@ -31,16 +31,8 @@ function fetchSearchResult(params) {
   }
 }
 
-function galleryToggle(index) {
-  return {
-    type: 'GALLERY_TOGGLE',
-    payload: index
-  }
-}
-
 export default {
   fetchTrendingTags,
   textChange,
   fetchSearchResult,
-  galleryToggle,
 };

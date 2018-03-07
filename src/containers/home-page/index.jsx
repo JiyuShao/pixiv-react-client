@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 
 import {
   Panel,
-  PanelHeader,
   PanelBody,
 } from 'react-weui';
 
 import Image from 'components/image';
-import InfiniteLoader from 'components/infinite-loader';
-import IllustCell from 'components/illust-cell';
 import TabbarContainer from 'containers/tabbar-container';
+import Swiper from 'components/swiper';
+import Gallery from 'containers/gallery';
 
 import _actions from './actions';
+import _actionsGallery from 'containers/gallery/actions';
+
+import './_home-page.scss';
 
 class HomePage extends React.Component {
   componentWillMount() {
@@ -21,41 +23,67 @@ class HomePage extends React.Component {
   }
 
   render() {
+    let {
+      recommendedResult,
+      galleryToggle,
+    } = this.props;
+
     return (
       <TabbarContainer className="home-page-container" currentTab="home">
-        <InfiniteLoader
-          style={{
-            height: document.documentElement.clientHeight - document.documentElement.clientWidth * 0.1307  // 0.355 is navbar + search bar + search tab ?vw
-          }}
-          onLoadMore={() => {
-            this.props.fetchRecommendedResult({sortOptions: this.props.sortOptions})
-          }}
-          // scrollTop={undefined}
-          finish={true}
-        >
-          <Panel className="search-result-container">
-            <PanelBody>
+        <Panel>
+          <PanelBody>
+            {
+              recommendedResult.ranking_illusts.length ?
+                <Swiper {...{
+                  pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                    dynamicBullets: true,
+                  }
+                }}>
+                  {
+                    recommendedResult.ranking_illusts.map((currentResult, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="ranking-image"
+                          onClick={() => {
+                            galleryToggle(currentResult.image_urls['large']);
+                          }}
+                        >
+                          <Image src={currentResult.image_urls.medium} />
+                        </div>
+                      )
+                    })
+                  }
+                </Swiper> : null
+            }
+
+            <div className="weui-cells__title title">Recommended illusts</div>
+            <div className="recommended-grids">
               {
-                this.props.recommendedResult.ranking_illusts.map((currentResult, index) => {
+                recommendedResult.illusts.map((currentResult, index) => {
                   return (
-                    <IllustCell
+                    <div
                       key={index}
-                      image={currentResult.image_urls.square_medium}
-                      original_image={currentResult.image_urls.large}
-                      title={currentResult.title}
-                      description={currentResult.caption}
-                      tags={currentResult.tags.map(e => e.name).join(', ')}
-                      is_bookmarked={currentResult.is_bookmarked}
+                      className="weui-grid"
                       onClick={() => {
-                        this.props.galleryToggle(currentResult.image_urls.large);
+                        galleryToggle(currentResult.image_urls['large']);
                       }}
-                    />
-                  )
+                    >
+                      <div className="flexbox flex-justify-content-center flex-align-items-center weui-grid__icon">
+                        <Image src={currentResult.image_urls['square_medium']} />
+                      </div>
+                      <p className="weui-grid__label">{currentResult.title}</p>
+                    </div>
+                  );
                 })
               }
-            </PanelBody>
-          </Panel>
-        </InfiniteLoader>
+            </div>
+          </PanelBody>
+        </Panel>
+        {/* Gallery container area */}
+        <Gallery />
       </TabbarContainer>
     );
   }
@@ -71,6 +99,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchRecommendedResult: bindActionCreators(_actions.fetchRecommendedResult, dispatch),
+    galleryToggle: bindActionCreators(_actionsGallery.galleryToggle, dispatch),
   };
 }
 

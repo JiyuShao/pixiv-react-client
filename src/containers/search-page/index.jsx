@@ -8,65 +8,78 @@ import {
   Panel,
   PanelHeader,
   PanelBody,
-  Button,
-  Gallery,
 } from 'react-weui';
 
 import Image from 'components/image';
 import InfiniteLoader from 'components/infinite-loader';
 import IllustCell from 'components/illust-cell';
 import TabbarContainer from 'containers/tabbar-container';
+import Gallery from 'containers/gallery';
 
 import './_search-page.scss';
 
 import _actions from './actions';
+import _actionsGallery from 'containers/gallery/actions.jsx';
+
 class SearchPage extends React.Component {
   componentWillMount() {
     this.props.fetchTrendingTags();
   }
 
   render() {
+
+    let {
+      tab,
+      searchText,
+      textChange,
+      fetchSearchResult,
+      sortOptions,
+      searchResult,
+      trendingTags,
+      galleryToggle,
+    } = this.props;
+
     return (
       <TabbarContainer className="search-page-container" currentTab="search">
         <SearchBar
           className="search-bar"
-          placeholder={this.props.searchText ? this.props.searchText : "Enter keyword"}
+          placeholder={searchText ? searchText : "Enter keyword"}
           lang={{
             cancel: 'Cancel'
           }}
-          onChange={this.props.textChange}
-          onCancel={this.props.textChange}
+          onChange={textChange}
+          onCancel={textChange}
           onSubmit={(text) => {
-            this.props.fetchSearchResult({
+            fetchSearchResult({
               text: text,
-              sortOptions: this.props.sortOptions,
-              searchResult: this.props.searchResult,
+              sortOptions: sortOptions,
+              searchResult: searchResult,
             })
           }}
         />
 
         <InfiniteLoader
           style={{
-            display: (this.props.tab === 'result') ? null : 'none',
+            display: (tab === 'result') ? null : 'none',
             height: document.documentElement.clientHeight - document.documentElement.clientWidth * 0.2506  // 0.355 is navbar + search bar + search tab ?vw
           }}
           onLoadMore={() => {
-            this.props.fetchSearchResult({
-              text: this.props.searchText,
-              sortOptions: this.props.sortOptions,
-              searchResult: this.props.searchResult,
+            fetchSearchResult({
+              text: searchText,
+              sortOptions: sortOptions,
+              searchResult: searchResult,
             })
           }}
           // scrollTop={undefined}
-          finish={!this.props.searchResult.next_url}
+          finish={!searchResult.next_url}
         >
           <Panel className="search-result-container">
             <PanelHeader>
-              {`Search Key: ${this.props.searchText}`}
+              {`Search Key: ${searchText}`}
             </PanelHeader>
             <PanelBody>
               {
-                this.props.searchResult.records.map((currentResult, index) => {
+                searchResult.records.map((currentResult, index) => {
                   return (
                     <IllustCell
                       key={index}
@@ -77,7 +90,7 @@ class SearchPage extends React.Component {
                       tags={currentResult.tags.map(e => e.name).join(', ')}
                       is_bookmarked={currentResult.is_bookmarked}
                       onClick={() => {
-                        this.props.galleryToggle(currentResult.image_urls.large);
+                        galleryToggle(currentResult.image_urls.large);
                       }}
                     />
                   )
@@ -87,36 +100,28 @@ class SearchPage extends React.Component {
           </Panel>
         </InfiniteLoader>
 
-        <div className="weui-grids tag-grids" style={{ display: (this.props.tab === 'tags') ? null : 'none' }}>
+        <div className="weui-grids tag-grids" style={{ display: (tab === 'tags') ? null : 'none' }}>
           {
-            this.props.trendingTags.map((currentTag, index) => {
+            trendingTags.map((currentTag, index) => {
               return (
-                <a key={index} className="weui-grid" href="javascript:;" onClick={() => {
-                  this.props.fetchSearchResult({
+                <span key={index} className="weui-grid" onClick={() => {
+                  fetchSearchResult({
                     text: currentTag.tag,
-                    sortOptions: this.props.sortOptions,
-                    searchResult: this.props.searchResult,
+                    sortOptions: sortOptions,
+                    searchResult: searchResult,
                   });
                 }}>
-                  <div className="weui-grid__icon">
+                  <div className="flexbox flex-justify-content-center flex-align-items-center weui-grid__icon">
                     <Image src={currentTag.illust.image_urls[(index === 0) ? 'medium' : 'square_medium']} />
                   </div>
                   <p className="weui-grid__label">{currentTag.tag}</p>
-                </a>
+                </span>
               );
             })
           }
-
         </div>
-
-        <Gallery className="gallery" src={this.props.galleryDisplayUrl}
-          // defaultIndex={this.props.galleryDisplayUrl}
-          show={this.props.galleryDisplay}>
-          <Button className="gallery-close"
-            onClick={() => { this.props.galleryToggle() }}
-            plain
-          >Back</Button>
-        </Gallery>
+        {/* Gallery container area */}
+        <Gallery />
       </TabbarContainer>
     );
   }
@@ -124,14 +129,13 @@ class SearchPage extends React.Component {
 
 const mapStateToProps = (state) => {
   let currentComponentState = state['search-page'];
+
   return {
     tab: currentComponentState.tab,
     trendingTags: currentComponentState.trendingTags,
     searchText: currentComponentState.searchText,
     sortOptions: currentComponentState.sortOptions,
     searchResult: currentComponentState.searchResult,
-    galleryDisplay: currentComponentState.galleryDisplay,
-    galleryDisplayUrl: currentComponentState.galleryDisplayUrl,
   };
 }
 
@@ -140,7 +144,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchTrendingTags: bindActionCreators(_actions.fetchTrendingTags, dispatch),
     textChange: bindActionCreators(_actions.textChange, dispatch),
     fetchSearchResult: bindActionCreators(_actions.fetchSearchResult, dispatch),
-    galleryToggle: bindActionCreators(_actions.galleryToggle, dispatch),
+    galleryToggle: bindActionCreators(_actionsGallery.galleryToggle, dispatch),
   };
 }
 

@@ -1,0 +1,24 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true,
+    "serviceworker": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "no-console": 0,
+    "no-unused-vars": 0,
+    "react/prop-types": 0,
+    "no-class-assign": 0,
+    "no-extra-semi": 1,
+    "react/no-string-refs": 0
+  }
+}
