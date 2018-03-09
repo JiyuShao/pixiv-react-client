@@ -7,6 +7,6 @@ function importAll(r) {
   });
   return images;
 }
-const images = importAll(require.context('./icons', false, /\.(png|jpe?g|svg)$/));
+// const images = importAll(require.context('./icons', false, /\.(png|jpe?g|svg)$/));
 
-export default images;
+export default [];
